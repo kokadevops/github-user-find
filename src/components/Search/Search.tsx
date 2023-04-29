@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { ReactComponent as SearchIcon } from "assets/icon-search.svg";
 import styles from "./Search.module.scss";
 import { Button } from "components/Button";
@@ -12,6 +13,11 @@ type InputFields = {
 };
 
 export const Search = ({ hasError, onSubmit }: SearchProps) => {
+    const ref = useRef<HTMLInputElement | null>(null);
+    useEffect(() => {
+        if (ref.current) ref.current.focus();
+    }, []);
+
     const handleSubmit = (
         e: React.FormEvent<HTMLFormElement & InputFields>
     ) => {
@@ -31,6 +37,7 @@ export const Search = ({ hasError, onSubmit }: SearchProps) => {
                 </label>
                 <input
                     id="search"
+                    ref={ref}
                     name="username"
                     type="text"
                     placeholder="search"
